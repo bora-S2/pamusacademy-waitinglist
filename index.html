@@ -4,13 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>학원 직원 전용 대기번호표</title>
+<title>파머스 국제어학원 대기번호표</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
   --navy:#203b6d;
+  --gold:#b8a878;
+  --gold2:#e2c56d;
   --orange:#f47c2a;
   --bg:#f8f7f4;
   --line:#ddd8d0;
@@ -28,6 +30,10 @@ body{
   color:var(--text);
 }
 
+/* =====================================================
+   로그인
+===================================================== */
+
 #login{
   min-height:100vh;
   display:grid;
@@ -44,7 +50,7 @@ body{
   box-shadow:0 12px 40px #00000010;
 }
 
-h1{
+.loginbox h1{
   margin:0;
   font-size:24px;
 }
@@ -72,6 +78,7 @@ input{
   border:1px solid #ddd;
   border-radius:9px;
   font-size:15px;
+  background:#fff;
 }
 
 button{
@@ -80,6 +87,7 @@ button{
   padding:12px 16px;
   font-weight:700;
   cursor:pointer;
+  font-size:14px;
 }
 
 button:disabled{
@@ -119,6 +127,10 @@ button:disabled{
   color:#248a52;
 }
 
+/* =====================================================
+   앱
+===================================================== */
+
 #app{
   display:none;
   max-width:1180px;
@@ -133,9 +145,15 @@ button:disabled{
   margin-bottom:18px;
 }
 
+.topbar h1{
+  margin:0;
+  font-size:25px;
+}
+
 .status{
   font-size:13px;
   color:#7c8798;
+  margin-right:10px;
 }
 
 .online{
@@ -161,14 +179,14 @@ button:disabled{
   padding:20px;
 }
 
+/* =====================================================
+   대기번호표
+===================================================== */
+
 .cardwrap{
   display:flex;
   justify-content:center;
 }
-
-/* =========================
-   대기번호표
-========================= */
 
 .ticket{
   width:375px;
@@ -179,34 +197,48 @@ button:disabled{
 }
 
 .ticket-inner{
-  border:1px solid #b8a878;
+  border:1px solid var(--gold);
   color:white;
   padding:22px 24px;
   text-align:center;
 }
 
+/*
+   공식 로고 이미지 전체를 쓰지 않고
+   왼쪽 P 심볼만 사용한다.
+*/
 .logo-box{
-  background:#fff;
-  border-radius:8px;
-  padding:10px 18px;
   display:flex;
   justify-content:center;
   align-items:center;
-  width:max-content;
-  max-width:100%;
-  margin:0 auto 7px;
+  gap:10px;
+  width:100%;
+  height:68px;
+  margin:0 auto 3px;
 }
 
-.logo-box img{
+.logo-symbol{
+  width:46px;
+  height:46px;
+  object-fit:contain;
   display:block;
-  width:220px;
-  max-width:100%;
-  height:auto;
+}
+
+.logo-text{
+  color:#fff;
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:-1.8px;
+  white-space:nowrap;
+  font-family:
+    "Noto Sans KR",
+    Arial,
+    sans-serif;
 }
 
 .tiny{
   font-size:11px;
-  color:#e2c56d;
+  color:var(--gold2);
 }
 
 .waiting{
@@ -215,12 +247,19 @@ button:disabled{
   margin-top:14px;
 }
 
+.number-label{
+  font-size:11px;
+  color:var(--gold2);
+  letter-spacing:3px;
+  margin-top:3px;
+}
+
 .number-line{
   display:flex;
   justify-content:center;
   align-items:baseline;
   gap:8px;
-  margin:12px 0 2px;
+  margin:13px 0 4px;
 }
 
 .num{
@@ -230,8 +269,8 @@ button:disabled{
 }
 
 .unit{
-  color:#e2c56d;
-  font-size:22px;
+  color:var(--gold2);
+  font-size:26px;
   font-weight:800;
 }
 
@@ -261,23 +300,44 @@ button:disabled{
   word-break:break-all;
 }
 
-/* =========================
+.ticket-notice{
+  font-size:11px;
+  color:#aeb9ce;
+  line-height:1.5;
+  margin:18px 0 0;
+}
+
+.phone{
+  font-weight:800;
+  margin-top:18px;
+}
+
+/* =====================================================
    문자
-========================= */
+===================================================== */
 
 .message{
   margin-top:18px;
 }
 
+.message-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
 .message textarea{
   width:100%;
-  height:250px;
+  height:260px;
   border:1px solid var(--line);
   border-radius:10px;
   padding:14px;
   resize:vertical;
   font-family:inherit;
   line-height:1.55;
+  font-size:14px;
 }
 
 .actions{
@@ -285,6 +345,7 @@ button:disabled{
   gap:8px;
   margin-top:12px;
   flex-wrap:wrap;
+  align-items:center;
 }
 
 .count{
@@ -300,9 +361,9 @@ button:disabled{
   font-size:12px;
 }
 
-/* =========================
+/* =====================================================
    명단
-========================= */
+===================================================== */
 
 .listpanel{
   margin-top:20px;
@@ -313,6 +374,7 @@ button:disabled{
   justify-content:space-between;
   align-items:center;
   margin-bottom:14px;
+  gap:10px;
 }
 
 .tablewrap{
@@ -343,9 +405,9 @@ td button{
   font-size:12px;
 }
 
-/* =========================
+/* =====================================================
    모바일
-========================= */
+===================================================== */
 
 @media(max-width:800px){
 
@@ -364,6 +426,21 @@ td button{
   .topbar{
     align-items:flex-start;
     gap:10px;
+  }
+
+  .listhead{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .logo-text{
+    font-size:24px;
+    letter-spacing:-1.5px;
+  }
+
+  .logo-symbol{
+    width:40px;
+    height:40px;
   }
 
 }
@@ -430,412 +507,475 @@ td button{
 
 
 <!-- =====================================================
-     메인 앱
+     앱
 ===================================================== -->
 
 <main id="app">
 
-<header style="margin:-28px -28px 24px">
+  <header style="margin:-28px -28px 24px">
 
-  <div
-    class="topbar"
-    style="max-width:1180px;margin:auto;padding:24px 28px"
-  >
+    <div
+      class="topbar"
+      style="max-width:1180px;margin:auto;padding:24px 28px"
+    >
 
-    <div>
+      <div>
 
-      <h1>
-        대기번호표 이미지 생성기
-      </h1>
+        <h1>
+          대기번호표 이미지 생성기
+        </h1>
 
-      <div class="sub">
-        직원들이 같은 대기 명단을 함께 관리합니다.
+        <div class="sub">
+          직원들이 같은 대기 명단을 함께 관리합니다.
+        </div>
+
+      </div>
+
+      <div>
+
+        <span
+          id="conn"
+          class="status offline"
+        >
+          연결 준비중
+        </span>
+
+        <button
+          class="secondary"
+          onclick="logout()"
+        >
+          로그아웃
+        </button>
+
       </div>
 
     </div>
 
-    <div>
+  </header>
 
-      <span id="conn" class="status offline">
-        연결 준비중
-      </span>
+
+  <div class="grid">
+
+    <!-- =================================================
+         입력
+    ================================================= -->
+
+    <section class="panel">
+
+      <div class="field">
+
+        <label for="number">
+          대기번호
+        </label>
+
+        <input
+          id="number"
+          type="number"
+          min="1"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="name">
+          학생 이름
+        </label>
+
+        <input
+          id="name"
+          placeholder="예: 홍지안"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="className">
+          등록 희망 반
+        </label>
+
+        <input
+          id="className"
+          placeholder="예: PreA5B"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="days">
+          요일
+        </label>
+
+        <input
+          id="days"
+          placeholder="예: 월수금"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="time">
+          시간
+        </label>
+
+        <input
+          id="time"
+          placeholder="예: 2:30-4:45/3:20-5:30[선택]"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="date">
+          대기 시작일
+        </label>
+
+        <input
+          id="date"
+          type="date"
+        >
+
+      </div>
+
+
+      <button
+        class="primary"
+        style="width:100%"
+        onclick="registerWaiting()"
+      >
+        📥 등록하고 이미지 저장
+      </button>
+
+
+      <p class="hint">
+        등록하면 모든 직원 컴퓨터의 명단에 바로 반영됩니다.
+      </p>
+
 
       <button
         class="secondary"
-        onclick="logout()"
+        style="width:100%;margin-top:8px"
+        onclick="nextNumber()"
       >
-        로그아웃
+        ↻ 다음 대기번호 자동 입력
       </button>
 
-    </div>
+    </section>
 
-  </div>
 
-</header>
+    <!-- =================================================
+         미리보기
+    ================================================= -->
 
+    <section>
 
-<div class="grid">
+      <div class="cardwrap">
 
-<!-- =====================================================
-     입력
-===================================================== -->
+        <div
+          class="ticket"
+          id="ticket"
+        >
 
-<section class="panel">
+          <div class="ticket-inner">
 
-  <div class="field">
-    <label for="number">
-      대기번호
-    </label>
 
-    <input
-      id="number"
-      type="number"
-      min="1"
-    >
-  </div>
+            <!-- =========================================
+                 로고
+                 P 심볼 + 흰색 텍스트
+            ========================================== -->
 
+            <div class="logo-box">
 
-  <div class="field">
-    <label for="name">
-      학생 이름
-    </label>
+              <img
+                id="logoSymbol"
+                class="logo-symbol"
+                src=""
+                alt="파머스 로고"
+              >
 
-    <input
-      id="name"
-      placeholder="예: 홍지안"
-    >
-  </div>
+              <div class="logo-text">
+                파머스국제어학원
+              </div>
 
+            </div>
 
-  <div class="field">
-    <label for="className">
-      등록 희망 반
-    </label>
 
-    <input
-      id="className"
-      placeholder="예: PreA5B"
-    >
-  </div>
+            <div class="tiny">
+              죽전본원
+            </div>
 
 
-  <div class="field">
-    <label for="days">
-      요일
-    </label>
+            <div class="waiting">
+              수강 대기번호표
+            </div>
 
-    <input
-      id="days"
-      placeholder="예: 월수금"
-    >
-  </div>
 
+            <div class="number-label">
+              WAITING NUMBER
+            </div>
 
-  <div class="field">
-    <label for="time">
-      시간
-    </label>
 
-    <input
-      id="time"
-      placeholder="예: 2:30-4:45/3:20-5:30[선택]"
-    >
-  </div>
+            <div class="goldline"></div>
 
 
-  <div class="field">
-    <label for="date">
-      대기 시작일
-    </label>
+            <!-- 숫자 오른쪽에 번 -->
 
-    <input
-      id="date"
-      type="date"
-    >
-  </div>
+            <div class="number-line">
 
+              <div
+                class="num"
+                id="previewNum"
+              >
+                1
+              </div>
 
-  <button
-    class="primary"
-    style="width:100%"
-    onclick="registerWaiting()"
-  >
-    📥 등록하고 이미지 저장
-  </button>
+              <div class="unit">
+                번
+              </div>
 
+            </div>
 
-  <p class="hint">
-    등록하면 모든 직원 컴퓨터의 명단에 바로 반영됩니다.
-  </p>
 
+            <div class="goldline"></div>
 
-  <button
-    class="secondary"
-    style="width:100%;margin-top:8px"
-    onclick="nextNumber()"
-  >
-    ↻ 다음 대기번호 자동 입력
-  </button>
 
-</section>
+            <div class="row">
 
+              <span>
+                이름
+              </span>
 
-<!-- =====================================================
-     미리보기
-===================================================== -->
+              <span id="previewName">
+                -
+              </span>
 
-<section>
+            </div>
 
-<div class="cardwrap">
 
-<div class="ticket" id="ticket">
+            <div class="row">
 
-<div class="ticket-inner">
+              <span>
+                등록 희망 반
+              </span>
 
-  <!-- 실제 파머스 공식 로고 -->
-  <div class="logo-box">
-    <img
-      src="파머스로고.png"
-      alt="파머스 국제어학원"
-    >
-  </div>
+              <span id="previewClass">
+                -
+              </span>
 
+            </div>
 
-  <div class="tiny">
-    죽전본원
-  </div>
 
+            <div class="row">
 
-  <div class="waiting">
-    수강 대기번호표
-  </div>
+              <span>
+                대기 시작일
+              </span>
 
+              <span id="previewDate">
+                -
+              </span>
 
-  <div
-    class="tiny"
-    style="letter-spacing:3px"
-  >
-    WAITING NUMBER
-  </div>
+            </div>
 
 
-  <div class="goldline"></div>
+            <p class="ticket-notice">
+              자리가 나는 대로 순서에 따라 순차 안내드리며,<br>
+              순번이 되면 바로 연락드리겠습니다.
+            </p>
 
 
-  <!-- 숫자 + 번 같은 줄 -->
-  <div class="number-line">
+            <div class="phone">
+              031-261-1755
+            </div>
 
-    <div
-      class="num"
-      id="previewNum"
-    >
-      1
-    </div>
 
-    <div class="unit">
-      번
-    </div>
+          </div>
 
-  </div>
+        </div>
 
+      </div>
 
-  <div class="goldline"></div>
 
+      <!-- =================================================
+           문자
+      ================================================= -->
 
-  <div class="row">
-    <span>이름</span>
-    <span id="previewName">-</span>
-  </div>
+      <div class="panel message">
 
+        <div class="message-head">
 
-  <div class="row">
-    <span>등록 희망 반</span>
-    <span id="previewClass">-</span>
-  </div>
+          <strong>
 
+            📩 문자 발송 멘트
 
-  <div class="row">
-    <span>대기 시작일</span>
-    <span id="previewDate">-</span>
-  </div>
+            <span class="badge">
+              자동 생성
+            </span>
 
+          </strong>
 
-  <p
-    style="
-      font-size:11px;
-      color:#aeb9ce;
-      line-height:1.5
-    "
-  >
-    자리가 나는 대로 순서에 따라 순차 안내드리며,<br>
-    순번이 되면 바로 연락드리겠습니다.
-  </p>
 
-
-  <div
-    style="
-      font-weight:800;
-      margin-top:18px
-    "
-  >
-    031-261-1755
-  </div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =====================================================
-     문자
-===================================================== -->
-
-<div class="panel message">
-
-  <div class="listhead">
-
-    <strong>
-
-      📩 문자 발송 멘트
-
-      <span class="badge">
-        자동 생성
-      </span>
-
-    </strong>
-
-    <button
-      class="secondary"
-      onclick="makeMessage()"
-    >
-      ↻ 다시 생성
-    </button>
-
-  </div>
-
-
-  <textarea
-    id="message"
-  ></textarea>
-
-
-  <div class="actions">
-
-    <span
-      class="count"
-      id="byteCount"
-    >
-      0 byte
-    </span>
-
-    <button
-      class="secondary"
-      onclick="copyMessage()"
-    >
-      📋 복사하기
-    </button>
-
-  </div>
-
-</div>
-
-</section>
-
-</div>
-
-
-<!-- =====================================================
-     대기자 명단
-===================================================== -->
-
-<section class="listpanel">
-
-  <div class="listhead">
-
-    <div>
-
-      <strong>
-        등록된 대기자 명단
-      </strong>
-
-      <span
-        class="badge"
-        id="total"
-      >
-        0명
-      </span>
-
-    </div>
-
-
-    <div
-      class="actions"
-      style="margin:0"
-    >
-
-      <button
-        class="secondary"
-        onclick="exportCSV()"
-      >
-        CSV 내보내기
-      </button>
-
-      <button
-        class="danger"
-        onclick="clearAll()"
-      >
-        전체 삭제
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <div class="tablewrap">
-
-    <table>
-
-      <thead>
-
-        <tr>
-          <th>번호</th>
-          <th>이름</th>
-          <th>등록 희망 반</th>
-          <th>대기 시작일</th>
-          <th>등록 시간</th>
-          <th>관리</th>
-        </tr>
-
-      </thead>
-
-      <tbody id="tbody">
-
-        <tr>
-
-          <td
-            colspan="6"
-            style="text-align:center"
+          <button
+            class="secondary"
+            onclick="makeMessage()"
           >
-            로그인 후 불러옵니다.
-          </td>
+            ↻ 다시 생성
+          </button>
 
-        </tr>
+        </div>
 
-      </tbody>
 
-    </table>
+        <textarea
+          id="message"
+        ></textarea>
+
+
+        <div class="actions">
+
+          <span
+            class="count"
+            id="byteCount"
+          >
+            0 byte
+          </span>
+
+
+          <button
+            class="secondary"
+            onclick="copyMessage()"
+          >
+            📋 복사하기
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
 
   </div>
 
 
-  <div class="hint">
-    온라인 공용 DB를 사용하므로 어느 직원 PC에서 등록/삭제해도 같은 명단이 보입니다.
-  </div>
+  <!-- ===================================================
+       대기자 명단
+  =================================================== -->
 
-</section>
+  <section class="listpanel">
+
+    <div class="listhead">
+
+      <div>
+
+        <strong>
+          등록된 대기자 명단
+        </strong>
+
+        <span
+          class="badge"
+          id="total"
+        >
+          0명
+        </span>
+
+      </div>
+
+
+      <div
+        class="actions"
+        style="margin:0"
+      >
+
+        <button
+          class="secondary"
+          onclick="exportCSV()"
+        >
+          CSV 내보내기
+        </button>
+
+
+        <button
+          class="danger"
+          onclick="clearAll()"
+        >
+          전체 삭제
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="tablewrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              번호
+            </th>
+
+            <th>
+              이름
+            </th>
+
+            <th>
+              등록 희망 반
+            </th>
+
+            <th>
+              대기 시작일
+            </th>
+
+            <th>
+              등록 시간
+            </th>
+
+            <th>
+              관리
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody id="tbody">
+
+          <tr>
+
+            <td
+              colspan="6"
+              style="text-align:center"
+            >
+              로그인 후 불러옵니다.
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <div class="hint">
+      온라인 공용 DB를 사용하므로 어느 직원 PC에서 등록/삭제해도 같은 명단이 보입니다.
+    </div>
+
+  </section>
 
 </main>
 
@@ -852,13 +992,16 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
   "sb_publishable_gepnuWchSkC8Dv4l2IyMOw_iUSVZODk";
 
+
 let sb = null;
+
 let rows = [];
+
 let channel = null;
 
 
 /* =====================================================
-   HTML 요소
+   요소
 ===================================================== */
 
 const loginSection =
@@ -924,6 +1067,234 @@ const previewClass =
 const previewDate =
   document.getElementById("previewDate");
 
+const logoSymbol =
+  document.getElementById("logoSymbol");
+
+
+/* =====================================================
+   공식 로고 파일
+===================================================== */
+
+/*
+  GitHub main 폴더에 있는 파일
+*/
+const LOGO_FILE =
+  "파머스로고.png";
+
+
+/*
+  원본 로고에서
+  왼쪽 P 심볼 부분만 잘라낸다.
+
+  현재 올려놓은 공식 파일 기준으로
+  심볼 영역은 왼쪽 약 34px.
+*/
+const SYMBOL_CROP_WIDTH =
+  34;
+
+
+let processedSymbolCanvas =
+  null;
+
+
+/* =====================================================
+   로고 심볼 준비
+===================================================== */
+
+async function prepareLogoSymbol(){
+
+  return new Promise(
+    (resolve,reject) => {
+
+      const img =
+        new Image();
+
+
+      img.onload =
+        function(){
+
+          /*
+            원본 전체를 임시 캔버스에 그린다.
+          */
+
+          const sourceCanvas =
+            document.createElement(
+              "canvas"
+            );
+
+
+          sourceCanvas.width =
+            img.naturalWidth;
+
+          sourceCanvas.height =
+            img.naturalHeight;
+
+
+          const sourceCtx =
+            sourceCanvas.getContext(
+              "2d",
+              {
+                willReadFrequently:true
+              }
+            );
+
+
+          sourceCtx.drawImage(
+            img,
+            0,
+            0
+          );
+
+
+          /*
+            흰색 배경을 투명하게 만든다.
+          */
+
+          const imageData =
+            sourceCtx.getImageData(
+              0,
+              0,
+              sourceCanvas.width,
+              sourceCanvas.height
+            );
+
+
+          const data =
+            imageData.data;
+
+
+          for(
+            let i = 0;
+            i < data.length;
+            i += 4
+          ){
+
+            const r =
+              data[i];
+
+            const g =
+              data[i + 1];
+
+            const b =
+              data[i + 2];
+
+            const a =
+              data[i + 3];
+
+
+            if(
+              a > 0 &&
+              r > 235 &&
+              g > 235 &&
+              b > 235
+            ){
+
+              data[i + 3] = 0;
+
+            }
+
+          }
+
+
+          sourceCtx.putImageData(
+            imageData,
+            0,
+            0
+          );
+
+
+          /*
+            왼쪽 P 심볼만 잘라낸다.
+          */
+
+          const cropWidth =
+            Math.min(
+              SYMBOL_CROP_WIDTH,
+              sourceCanvas.width
+            );
+
+
+          const symbolCanvas =
+            document.createElement(
+              "canvas"
+            );
+
+
+          symbolCanvas.width =
+            cropWidth;
+
+          symbolCanvas.height =
+            sourceCanvas.height;
+
+
+          const symbolCtx =
+            symbolCanvas.getContext(
+              "2d"
+            );
+
+
+          symbolCtx.drawImage(
+            sourceCanvas,
+
+            0,
+            0,
+            cropWidth,
+            sourceCanvas.height,
+
+            0,
+            0,
+            cropWidth,
+            sourceCanvas.height
+          );
+
+
+          processedSymbolCanvas =
+            symbolCanvas;
+
+
+          /*
+            웹페이지 미리보기용
+          */
+
+          logoSymbol.src =
+            symbolCanvas.toDataURL(
+              "image/png"
+            );
+
+
+          resolve(
+            symbolCanvas
+          );
+
+        };
+
+
+      img.onerror =
+        function(){
+
+          reject(
+            new Error(
+              "파머스로고.png 파일을 불러오지 못했습니다."
+            )
+          );
+
+        };
+
+
+      /*
+        GitHub Pages 캐시 방지
+      */
+
+      img.src =
+        LOGO_FILE +
+        "?v=" +
+        Date.now();
+
+    }
+  );
+
+}
+
 
 /* =====================================================
    기본
@@ -941,25 +1312,47 @@ function configured(){
 
 function today(){
 
-  const d = new Date();
+  const d =
+    new Date();
+
 
   const year =
     d.getFullYear();
 
+
   const month =
-    String(d.getMonth()+1).padStart(2,"0");
+    String(
+      d.getMonth() + 1
+    ).padStart(
+      2,
+      "0"
+    );
+
 
   const day =
-    String(d.getDate()).padStart(2,"0");
+    String(
+      d.getDate()
+    ).padStart(
+      2,
+      "0"
+    );
 
-  return `${year}-${month}-${day}`;
+
+  return (
+    year +
+    "-" +
+    month +
+    "-" +
+    day
+  );
 
 }
 
 
 function setDate(){
 
-  dateInput.value = today();
+  dateInput.value =
+    today();
 
 }
 
@@ -971,10 +1364,16 @@ function setDate(){
 function formatDate(value){
 
   if(!value){
+
     return "-";
+
   }
 
-  return value.replaceAll("-",".");
+
+  return value.replaceAll(
+    "-",
+    "."
+  );
 
 }
 
@@ -988,11 +1387,14 @@ function updatePreview(){
   const n =
     numberInput.value || 1;
 
+
   const name =
     nameInputEl.value.trim() || "-";
 
+
   const className =
     classInput.value.trim() || "-";
+
 
   const date =
     dateInput.value || "-";
@@ -1001,20 +1403,29 @@ function updatePreview(){
   previewNum.textContent =
     n;
 
+
   previewName.textContent =
     name;
+
 
   previewClass.textContent =
     className;
 
+
   previewDate.textContent =
-    formatDate(date);
+    formatDate(
+      date
+    );
 
 
   makeMessage();
 
 }
 
+
+/* =====================================================
+   입력 이벤트
+===================================================== */
 
 [
   numberInput,
@@ -1023,14 +1434,16 @@ function updatePreview(){
   daysInput,
   timeInput,
   dateInput
-].forEach(el => {
+].forEach(
+  el => {
 
-  el.addEventListener(
-    "input",
-    updatePreview
-  );
+    el.addEventListener(
+      "input",
+      updatePreview
+    );
 
-});
+  }
+);
 
 
 /* =====================================================
@@ -1042,24 +1455,32 @@ function makeMessage(){
   const n =
     numberInput.value || 1;
 
+
   const name =
     nameInputEl.value.trim();
+
 
   const date =
     dateInput.value || "";
 
+
   const className =
     classInput.value.trim();
 
+
   const days =
     daysInput.value.trim();
+
 
   const time =
     timeInput.value.trim();
 
 
   const formattedDate =
-    date.replaceAll("-",".");
+    date.replaceAll(
+      "-",
+      "."
+    );
 
 
   messageInput.value =
@@ -1080,7 +1501,9 @@ ${name} 학생 학부모님, ${className} 수강 대기 신청이 정상 접수�
 
   byteCount.textContent =
     new TextEncoder()
-      .encode(messageInput.value)
+      .encode(
+        messageInput.value
+      )
       .length +
     " byte";
 
@@ -1095,21 +1518,27 @@ function nextNumber(){
 
   if(!rows.length){
 
-    numberInput.value = 1;
+    numberInput.value =
+      1;
 
   }else{
 
     const max =
       Math.max(
         ...rows.map(
-          x => Number(x.number) || 0
+          x =>
+            Number(
+              x.number
+            ) || 0
         )
       );
+
 
     numberInput.value =
       max + 1;
 
   }
+
 
   updatePreview();
 
@@ -1125,8 +1554,10 @@ async function login(){
   loginMsg.className =
     "hint";
 
+
   loginMsg.textContent =
     "로그인 중...";
+
 
   loginButton.disabled =
     true;
@@ -1157,6 +1588,7 @@ async function login(){
     const email =
       emailInput.value.trim();
 
+
     const password =
       passwordInput.value;
 
@@ -1183,6 +1615,7 @@ async function login(){
       await sb.auth.signInWithPassword({
 
         email:email,
+
         password:password
 
       });
@@ -1195,10 +1628,12 @@ async function login(){
     }
 
 
-    if(!result.data.session){
+    if(
+      !result.data.session
+    ){
 
       throw new Error(
-        "로그인은 처리됐지만 로그인 세션이 만들어지지 않았습니다."
+        "로그인 세션이 만들어지지 않았습니다."
       );
 
     }
@@ -1206,6 +1641,7 @@ async function login(){
 
     loginMsg.className =
       "hint success";
+
 
     loginMsg.textContent =
       "로그인 성공!";
@@ -1225,9 +1661,13 @@ async function login(){
     loginMsg.className =
       "hint error";
 
+
     loginMsg.textContent =
       "로그인 실패: " +
-      (error.message || error);
+      (
+        error.message ||
+        error
+      );
 
 
   }finally{
@@ -1248,7 +1688,9 @@ emailInput.addEventListener(
   "keydown",
   e => {
 
-    if(e.key === "Enter"){
+    if(
+      e.key === "Enter"
+    ){
 
       passwordInput.focus();
 
@@ -1262,7 +1704,9 @@ passwordInput.addEventListener(
   "keydown",
   e => {
 
-    if(e.key === "Enter"){
+    if(
+      e.key === "Enter"
+    ){
 
       login();
 
@@ -1284,6 +1728,7 @@ async function logout(){
 
   }
 
+
   showLogin();
 
 }
@@ -1298,11 +1743,14 @@ function showLogin(){
   loginSection.style.display =
     "grid";
 
+
   appSection.style.display =
     "none";
 
+
   conn.textContent =
     "로그인 필요";
+
 
   conn.className =
     "status offline";
@@ -1319,11 +1767,13 @@ async function showApp(){
   loginSection.style.display =
     "none";
 
+
   appSection.style.display =
     "block";
 
 
   await loadRows();
+
 
   subscribe();
 
@@ -1331,7 +1781,7 @@ async function showApp(){
 
 
 /* =====================================================
-   목록 불러오기
+   DB 목록 불러오기
 ===================================================== */
 
 async function loadRows(){
@@ -1345,7 +1795,10 @@ async function loadRows(){
 
   tbody.innerHTML =
     `<tr>
-      <td colspan="6" style="text-align:center">
+      <td
+        colspan="6"
+        style="text-align:center"
+      >
         불러오는 중...
       </td>
     </tr>`;
@@ -1353,7 +1806,9 @@ async function loadRows(){
 
   const result =
     await sb
-      .from("waiting_list")
+      .from(
+        "waiting_list"
+      )
       .select("*")
       .order(
         "number",
@@ -1374,15 +1829,21 @@ async function loadRows(){
     conn.textContent =
       "DB 오류";
 
+
     conn.className =
       "status offline";
 
 
     tbody.innerHTML =
       `<tr>
-        <td colspan="6" style="text-align:center">
+        <td
+          colspan="6"
+          style="text-align:center"
+        >
           대기명단을 불러오지 못했습니다.<br><br>
-          ${esc(result.error.message)}
+          ${esc(
+            result.error.message
+          )}
         </td>
       </tr>`;
 
@@ -1402,6 +1863,7 @@ async function loadRows(){
   conn.textContent =
     "● 온라인";
 
+
   conn.className =
     "status online";
 
@@ -1412,7 +1874,7 @@ async function loadRows(){
 
 
 /* =====================================================
-   실시간 업데이트
+   실시간
 ===================================================== */
 
 function subscribe(){
@@ -1426,14 +1888,18 @@ function subscribe(){
 
   if(channel){
 
-    sb.removeChannel(channel);
+    sb.removeChannel(
+      channel
+    );
 
   }
 
 
   channel =
     sb
-      .channel("waiting-list-live")
+      .channel(
+        "waiting-list-live"
+      )
 
       .on(
         "postgres_changes",
@@ -1464,7 +1930,7 @@ function subscribe(){
 
 
 /* =====================================================
-   대기자 등록
+   등록
 ===================================================== */
 
 async function registerWaiting(){
@@ -1481,13 +1947,18 @@ async function registerWaiting(){
 
 
   const n =
-    Number(numberInput.value);
+    Number(
+      numberInput.value
+    );
+
 
   const name =
     nameInputEl.value.trim();
 
+
   const className =
     classInput.value.trim();
+
 
   const date =
     dateInput.value;
@@ -1537,19 +2008,24 @@ async function registerWaiting(){
   }
 
 
-  /* 
-     DB에는 기존 구조 그대로 저장.
-     요일/시간은 문자 생성용으로만 사용.
+  /*
+    DB에는 기존 구조만 저장.
+    요일/시간은 문자 생성용.
   */
 
   const result =
     await sb
-      .from("waiting_list")
+      .from(
+        "waiting_list"
+      )
       .insert({
 
         number:n,
+
         name:name,
+
         class_name:className,
+
         start_date:date
 
       });
@@ -1573,21 +2049,33 @@ async function registerWaiting(){
   }
 
 
-  /*
-     중요:
-     먼저 현재 번호로 이미지를 저장한 뒤
-     목록을 새로 불러오고 다음 번호로 이동.
-  */
+  try{
 
-  await saveTicketImage();
+    await saveTicketImage();
+
+  }catch(error){
+
+    console.error(
+      "IMAGE ERROR:",
+      error
+    );
 
 
-  alert(
-    `${n}번 대기자가 등록되었습니다.`
-  );
+    alert(
+      "대기자는 등록됐지만 이미지 저장에 실패했습니다.\n\n" +
+      error.message
+    );
+
+  }
 
 
   await loadRows();
+
+
+  alert(
+    n +
+    "번 대기자가 등록되었습니다."
+  );
 
 }
 
@@ -1598,9 +2086,11 @@ async function registerWaiting(){
 
 async function removeRow(id){
 
-  if(!confirm(
-    "이 대기자를 삭제할까요?"
-  )){
+  if(
+    !confirm(
+      "이 대기자를 삭제할까요?"
+    )
+  ){
 
     return;
 
@@ -1609,9 +2099,14 @@ async function removeRow(id){
 
   const result =
     await sb
-      .from("waiting_list")
+      .from(
+        "waiting_list"
+      )
       .delete()
-      .eq("id",id);
+      .eq(
+        "id",
+        id
+      );
 
 
   if(result.error){
@@ -1637,9 +2132,11 @@ async function removeRow(id){
 
 async function clearAll(){
 
-  if(!confirm(
-    "대기 명단을 전체 삭제할까요?"
-  )){
+  if(
+    !confirm(
+      "대기 명단을 전체 삭제할까요?"
+    )
+  ){
 
     return;
 
@@ -1648,7 +2145,9 @@ async function clearAll(){
 
   const result =
     await sb
-      .from("waiting_list")
+      .from(
+        "waiting_list"
+      )
       .delete()
       .not(
         "id",
@@ -1675,13 +2174,14 @@ async function clearAll(){
 
 
 /* =====================================================
-   목록 표시
+   명단 표시
 ===================================================== */
 
 function render(){
 
   total.textContent =
-    rows.length + "명";
+    rows.length +
+    "명";
 
 
   if(!rows.length){
@@ -1696,6 +2196,7 @@ function render(){
         </td>
       </tr>`;
 
+
     return;
 
   }
@@ -1703,62 +2204,64 @@ function render(){
 
   tbody.innerHTML =
     rows
-      .map(r => {
+      .map(
+        r => {
 
-        const created =
-          r.created_at
-            ? new Date(
-                r.created_at
-              ).toLocaleString(
-                "ko-KR"
-              )
-            : "";
-
-
-        return `
-          <tr>
-
-            <td>
-              ${esc(r.number)}
-            </td>
-
-            <td>
-              ${esc(r.name)}
-            </td>
-
-            <td>
-              ${esc(
-                r.class_name || ""
-              )}
-            </td>
-
-            <td>
-              ${esc(
-                formatDate(
-                  r.start_date || ""
+          const created =
+            r.created_at
+              ? new Date(
+                  r.created_at
+                ).toLocaleString(
+                  "ko-KR"
                 )
-              )}
-            </td>
+              : "";
 
-            <td>
-              ${esc(created)}
-            </td>
 
-            <td>
+          return `
+            <tr>
 
-              <button
-                class="danger"
-                onclick="removeRow('${esc(r.id)}')"
-              >
-                삭제
-              </button>
+              <td>
+                ${esc(r.number)}
+              </td>
 
-            </td>
+              <td>
+                ${esc(r.name)}
+              </td>
 
-          </tr>
-        `;
+              <td>
+                ${esc(
+                  r.class_name || ""
+                )}
+              </td>
 
-      })
+              <td>
+                ${esc(
+                  formatDate(
+                    r.start_date || ""
+                  )
+                )}
+              </td>
+
+              <td>
+                ${esc(created)}
+              </td>
+
+              <td>
+
+                <button
+                  class="danger"
+                  onclick="removeRow('${esc(r.id)}')"
+                >
+                  삭제
+                </button>
+
+              </td>
+
+            </tr>
+          `;
+
+        }
+      )
       .join("");
 
 }
@@ -1793,122 +2296,22 @@ function esc(value){
 
 
 /* =====================================================
-   공식 로고 이미지 로드
-===================================================== */
-
-function loadLogo(){
-
-  return new Promise(
-    (resolve,reject) => {
-
-      const logo =
-        new Image();
-
-      logo.onload =
-        () => resolve(logo);
-
-      logo.onerror =
-        () => reject(
-          new Error(
-            "파머스로고.png 파일을 불러오지 못했습니다."
-          )
-        );
-
-      /*
-         index.html과 같은 GitHub 폴더에 있는
-         실제 공식 로고 파일
-      */
-
-      logo.src =
-        "파머스로고.png";
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   둥근 사각형
-===================================================== */
-
-function roundRect(
-  ctx,
-  x,
-  y,
-  width,
-  height,
-  radius
-){
-
-  ctx.beginPath();
-
-  ctx.moveTo(
-    x + radius,
-    y
-  );
-
-  ctx.lineTo(
-    x + width - radius,
-    y
-  );
-
-  ctx.quadraticCurveTo(
-    x + width,
-    y,
-    x + width,
-    y + radius
-  );
-
-  ctx.lineTo(
-    x + width,
-    y + height - radius
-  );
-
-  ctx.quadraticCurveTo(
-    x + width,
-    y + height,
-    x + width - radius,
-    y + height
-  );
-
-  ctx.lineTo(
-    x + radius,
-    y + height
-  );
-
-  ctx.quadraticCurveTo(
-    x,
-    y + height,
-    x,
-    y + height - radius
-  );
-
-  ctx.lineTo(
-    x,
-    y + radius
-  );
-
-  ctx.quadraticCurveTo(
-    x,
-    y,
-    x + radius,
-    y
-  );
-
-  ctx.closePath();
-
-}
-
-
-/* =====================================================
-   이미지 저장
+   대기번호표 이미지 저장
 ===================================================== */
 
 async function saveTicketImage(){
 
-  const logo =
-    await loadLogo();
+  /*
+    심볼이 아직 준비되지 않았다면 준비
+  */
+
+  if(
+    !processedSymbolCanvas
+  ){
+
+    await prepareLogoSymbol();
+
+  }
 
 
   const canvas =
@@ -1917,24 +2320,33 @@ async function saveTicketImage(){
     );
 
 
-  const w = 750;
-  const h = 980;
+  const w =
+    750;
+
+  const h =
+    980;
 
 
-  canvas.width = w;
-  canvas.height = h;
+  canvas.width =
+    w;
+
+  canvas.height =
+    h;
 
 
   const ctx =
-    canvas.getContext("2d");
+    canvas.getContext(
+      "2d"
+    );
 
 
-  /* =========================
-     배경
-  ========================= */
+  /* =================================================
+     전체 네이비 배경
+  ================================================= */
 
   ctx.fillStyle =
     "#203b6d";
+
 
   ctx.fillRect(
     0,
@@ -1944,14 +2356,17 @@ async function saveTicketImage(){
   );
 
 
-  /* =========================
-     테두리
-  ========================= */
+  /* =================================================
+     금색 테두리
+  ================================================= */
 
   ctx.strokeStyle =
     "#b8a878";
 
-  ctx.lineWidth = 2;
+
+  ctx.lineWidth =
+    2;
+
 
   ctx.strokeRect(
     20,
@@ -1961,128 +2376,205 @@ async function saveTicketImage(){
   );
 
 
-  /* =========================
-     공식 파머스 로고
-  ========================= */
+  /* =================================================
+     P 심볼 + 파머스국제어학원
+  ================================================= */
 
-  const logoBoxW = 430;
-  const logoBoxH = 105;
-  const logoBoxX =
-    (w - logoBoxW) / 2;
-  const logoBoxY = 55;
+  const symbol =
+    processedSymbolCanvas;
+
+
+  /*
+    심볼 크기
+  */
+
+  const symbolH =
+    50;
+
+
+  const symbolScale =
+    symbolH /
+    symbol.height;
+
+
+  const symbolW =
+    symbol.width *
+    symbolScale;
+
+
+  /*
+    텍스트
+  */
+
+  const logoText =
+    "파머스국제어학원";
+
+
+  ctx.font =
+    "800 38px Arial, 'Noto Sans KR', sans-serif";
+
+
+  const textWidth =
+    ctx.measureText(
+      logoText
+    ).width;
+
+
+  const logoGap =
+    12;
+
+
+  const totalLogoWidth =
+    symbolW +
+    logoGap +
+    textWidth;
+
+
+  const logoStartX =
+    (w - totalLogoWidth) / 2;
+
+
+  const logoY =
+    62;
+
+
+  /*
+    심볼
+  */
+
+  ctx.drawImage(
+    symbol,
+
+    logoStartX,
+
+    logoY,
+
+    symbolW,
+
+    symbolH
+  );
+
+
+  /*
+    흰색 텍스트
+  */
+
+  ctx.textAlign =
+    "left";
+
+
+  ctx.textBaseline =
+    "middle";
 
 
   ctx.fillStyle =
     "#ffffff";
 
-  roundRect(
-    ctx,
-    logoBoxX,
-    logoBoxY,
-    logoBoxW,
-    logoBoxH,
-    12
-  );
 
-  ctx.fill();
+  ctx.font =
+    "800 38px Arial, 'Noto Sans KR', sans-serif";
 
 
-  const maxLogoW = 360;
-  const maxLogoH = 70;
+  ctx.fillText(
+    logoText,
 
+    logoStartX +
+      symbolW +
+      logoGap,
 
-  const scale =
-    Math.min(
-      maxLogoW / logo.naturalWidth,
-      maxLogoH / logo.naturalHeight
-    );
-
-
-  const logoW =
-    logo.naturalWidth * scale;
-
-  const logoH =
-    logo.naturalHeight * scale;
-
-
-  ctx.drawImage(
-    logo,
-    w / 2 - logoW / 2,
-    logoBoxY + logoBoxH / 2 - logoH / 2,
-    logoW,
-    logoH
+    logoY +
+      symbolH / 2
   );
 
 
-  /* =========================
+  /*
+    이후 텍스트용 기준을 다시 설정
+  */
+
+  ctx.textBaseline =
+    "alphabetic";
+
+
+  /* =================================================
      죽전본원
-  ========================= */
+  ================================================= */
 
   ctx.textAlign =
     "center";
 
+
   ctx.fillStyle =
     "#e2c56d";
+
 
   ctx.font =
     "bold 22px Arial";
 
+
   ctx.fillText(
     "죽전본원",
     w / 2,
-    190
+    180
   );
 
 
-  /* =========================
-     제목
-  ========================= */
+  /* =================================================
+     수강 대기번호표
+  ================================================= */
 
   ctx.fillStyle =
     "#ffffff";
 
+
   ctx.font =
     "bold 30px Arial";
+
 
   ctx.fillText(
     "수강 대기번호표",
     w / 2,
-    245
+    235
   );
 
+
+  /* =================================================
+     WAITING NUMBER
+  ================================================= */
 
   ctx.fillStyle =
     "#e2c56d";
 
+
   ctx.font =
     "bold 18px Arial";
+
 
   ctx.fillText(
     "WAITING NUMBER",
     w / 2,
-    278
+    268
   );
 
 
-  /* =========================
+  /* =================================================
      금색 라인
-  ========================= */
+  ================================================= */
 
   ctx.fillStyle =
     "#c4aa54";
 
+
   ctx.fillRect(
     w / 2 - 35,
-    305,
+    295,
     70,
     2
   );
 
 
-  /* =========================
+  /* =================================================
      번호 + 번
-     같은 줄
-  ========================= */
+  ================================================= */
 
   const number =
     String(
@@ -2090,8 +2582,13 @@ async function saveTicketImage(){
     );
 
 
+  ctx.textAlign =
+    "left";
+
+
   ctx.font =
     "900 170px Arial";
+
 
   const numberWidth =
     ctx.measureText(
@@ -2102,13 +2599,16 @@ async function saveTicketImage(){
   ctx.font =
     "bold 42px Arial";
 
+
   const unitWidth =
     ctx.measureText(
       "번"
     ).width;
 
 
-  const gap = 18;
+  const gap =
+    18;
+
 
   const totalWidth =
     numberWidth +
@@ -2120,163 +2620,191 @@ async function saveTicketImage(){
     (w - totalWidth) / 2;
 
 
-  ctx.textAlign =
-    "left";
-
   ctx.fillStyle =
     "#ffffff";
+
 
   ctx.font =
     "900 170px Arial";
 
+
   ctx.fillText(
     number,
     startX,
-    485
+    475
   );
 
 
   ctx.fillStyle =
     "#e2c56d";
 
+
   ctx.font =
     "bold 42px Arial";
 
+
   ctx.fillText(
     "번",
+
     startX +
       numberWidth +
       gap,
-    485
+
+    475
   );
 
 
-  /* =========================
+  /* =================================================
      금색 라인
-  ========================= */
+  ================================================= */
 
   ctx.fillStyle =
     "#c4aa54";
 
+
   ctx.fillRect(
     w / 2 - 35,
-    525,
+    515,
     70,
     2
   );
 
 
-  /* =========================
-     정보
-  ========================= */
+  /* =================================================
+     학생 정보
+  ================================================= */
 
   ctx.textAlign =
     "left";
 
+
   ctx.font =
     "bold 25px Arial";
 
-  const labelX = 80;
-  const valueX = 260;
 
+  const labelX =
+    80;
+
+
+  const valueX =
+    260;
+
+
+  /* 이름 */
 
   ctx.fillStyle =
     "#d8b84f";
+
 
   ctx.fillText(
     "이름",
     labelX,
-    610
+    600
   );
 
 
   ctx.fillStyle =
     "#ffffff";
+
 
   ctx.fillText(
     nameInputEl.value || "-",
     valueX,
-    610
+    600
   );
 
 
+  /* 등록 희망 반 */
+
   ctx.fillStyle =
     "#d8b84f";
+
 
   ctx.fillText(
     "등록 희망 반",
     labelX,
-    680
+    670
   );
 
 
   ctx.fillStyle =
     "#ffffff";
+
 
   ctx.fillText(
     classInput.value || "-",
     valueX,
-    680
+    670
   );
 
+
+  /* 대기 시작일 */
 
   ctx.fillStyle =
     "#d8b84f";
 
+
   ctx.fillText(
     "대기 시작일",
     labelX,
-    750
+    740
   );
 
 
   ctx.fillStyle =
     "#ffffff";
+
 
   ctx.fillText(
     formatDate(
       dateInput.value || "-"
     ),
     valueX,
-    750
+    740
   );
 
 
-  /* =========================
+  /* =================================================
      안내 문구
-  ========================= */
+  ================================================= */
 
   ctx.textAlign =
     "center";
 
+
   ctx.fillStyle =
     "#aeb9ce";
+
 
   ctx.font =
     "18px Arial";
 
+
   ctx.fillText(
     "자리가 나는 대로 순서에 따라 순차 안내드리며,",
     w / 2,
-    810
+    805
   );
+
 
   ctx.fillText(
     "순번이 되면 바로 연락드리겠습니다.",
     w / 2,
-    840
+    835
   );
 
 
-  /* =========================
+  /* =================================================
      전화번호
-  ========================= */
+  ================================================= */
 
   ctx.fillStyle =
     "#ffffff";
 
+
   ctx.font =
     "bold 26px Arial";
+
 
   ctx.fillText(
     "문의 : 031-261-1755",
@@ -2285,9 +2813,9 @@ async function saveTicketImage(){
   );
 
 
-  /* =========================
-     다운로드
-  ========================= */
+  /* =================================================
+     이미지 저장
+  ================================================= */
 
   const a =
     document.createElement(
@@ -2332,6 +2860,7 @@ async function copyMessage(){
 
     messageInput.select();
 
+
     document.execCommand(
       "copy"
     );
@@ -2373,25 +2902,27 @@ function exportCSV(){
       "등록 시간"
     ],
 
-    ...rows.map(r => [
+    ...rows.map(
+      r => [
 
-      r.number,
+        r.number,
 
-      r.name,
+        r.name,
 
-      r.class_name || "",
+        r.class_name || "",
 
-      r.start_date,
+        r.start_date,
 
-      r.created_at
-        ? new Date(
-            r.created_at
-          ).toLocaleString(
-            "ko-KR"
-          )
-        : ""
+        r.created_at
+          ? new Date(
+              r.created_at
+            ).toLocaleString(
+              "ko-KR"
+            )
+          : ""
 
-    ])
+      ]
+    )
 
   ];
 
@@ -2399,17 +2930,18 @@ function exportCSV(){
   const csv =
     "\uFEFF" +
     lines
-      .map(row =>
-        row
-          .map(
-            value =>
-              `"${String(value)
-                .replaceAll(
-                  '"',
-                  '""'
-                )}"`
-          )
-          .join(",")
+      .map(
+        row =>
+          row
+            .map(
+              value =>
+                `"${String(value)
+                  .replaceAll(
+                    '"',
+                    '""'
+                  )}"`
+            )
+            .join(",")
       )
       .join("\n");
 
@@ -2442,15 +2974,50 @@ function exportCSV(){
 
 
 /* =====================================================
-   앱 시작
+   시작
 ===================================================== */
 
 async function boot(){
 
+  /*
+    날짜
+  */
+
   setDate();
+
+
+  /*
+    공식 로고에서
+    P 심볼 준비
+  */
+
+  try{
+
+    await prepareLogoSymbol();
+
+  }catch(error){
+
+    console.error(
+      "LOGO ERROR:",
+      error
+    );
+
+    loginMsg.textContent =
+      "파머스로고.png 파일을 불러오지 못했습니다. GitHub 파일명을 확인해주세요.";
+
+  }
+
+
+  /*
+    미리보기
+  */
 
   updatePreview();
 
+
+  /*
+    Supabase
+  */
 
   if(!configured()){
 
@@ -2469,13 +3036,17 @@ async function boot(){
     );
 
 
-  /* 기존 로그인 세션 확인 */
+  /*
+    기존 로그인 세션
+  */
 
   const result =
     await sb.auth.getSession();
 
 
-  if(result.data.session){
+  if(
+    result.data.session
+  ){
 
     await showApp();
 
@@ -2486,10 +3057,15 @@ async function boot(){
   }
 
 
-  /* 로그인 상태 변경 */
+  /*
+    인증 상태 변경
+  */
 
   sb.auth.onAuthStateChange(
-    async (event, session) => {
+    async (
+      event,
+      session
+    ) => {
 
       console.log(
         "AUTH:",
@@ -2519,8 +3095,6 @@ async function boot(){
 
 }
 
-
-/* 시작 */
 
 boot();
 
