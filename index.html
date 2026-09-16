@@ -28,7 +28,6 @@ body{
   color:var(--text);
 }
 
-/* 로그인 */
 #login{
   min-height:100vh;
   display:grid;
@@ -120,7 +119,6 @@ button:disabled{
   color:#248a52;
 }
 
-/* 앱 */
 #app{
   display:none;
   max-width:1180px;
@@ -168,7 +166,10 @@ button:disabled{
   justify-content:center;
 }
 
-/* 대기번호표 */
+/* =========================
+   대기번호표
+========================= */
+
 .ticket{
   width:375px;
   background:var(--navy);
@@ -184,10 +185,23 @@ button:disabled{
   text-align:center;
 }
 
-.logo{
-  font-size:22px;
-  font-weight:800;
-  margin-bottom:8px;
+.logo-box{
+  background:#fff;
+  border-radius:8px;
+  padding:10px 18px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:max-content;
+  max-width:100%;
+  margin:0 auto 7px;
+}
+
+.logo-box img{
+  display:block;
+  width:220px;
+  max-width:100%;
+  height:auto;
 }
 
 .tiny{
@@ -201,16 +215,24 @@ button:disabled{
   margin-top:14px;
 }
 
+.number-line{
+  display:flex;
+  justify-content:center;
+  align-items:baseline;
+  gap:8px;
+  margin:12px 0 2px;
+}
+
 .num{
   font-size:84px;
   line-height:1;
   font-weight:900;
-  margin:12px 0 2px;
 }
 
 .unit{
   color:#e2c56d;
-  font-size:17px;
+  font-size:22px;
+  font-weight:800;
 }
 
 .goldline{
@@ -223,6 +245,7 @@ button:disabled{
 .row{
   display:flex;
   justify-content:space-between;
+  gap:15px;
   border-bottom:1px solid #536887;
   padding:10px 0;
   font-size:13px;
@@ -233,14 +256,22 @@ button:disabled{
   font-weight:700;
 }
 
-/* 문자 */
+.row span:last-child{
+  text-align:right;
+  word-break:break-all;
+}
+
+/* =========================
+   문자
+========================= */
+
 .message{
   margin-top:18px;
 }
 
 .message textarea{
   width:100%;
-  height:210px;
+  height:250px;
   border:1px solid var(--line);
   border-radius:10px;
   padding:14px;
@@ -269,7 +300,10 @@ button:disabled{
   font-size:12px;
 }
 
-/* 명단 */
+/* =========================
+   명단
+========================= */
+
 .listpanel{
   margin-top:20px;
 }
@@ -309,8 +343,12 @@ td button{
   font-size:12px;
 }
 
-/* 모바일 */
+/* =========================
+   모바일
+========================= */
+
 @media(max-width:800px){
+
   #app{
     padding:14px;
   }
@@ -327,15 +365,16 @@ td button{
     align-items:flex-start;
     gap:10px;
   }
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- =========================
-     로그인 화면
-========================= -->
+<!-- =====================================================
+     로그인
+===================================================== -->
 
 <section id="login">
 
@@ -349,6 +388,7 @@ td button{
 
     <div class="field">
       <label for="email">직원 이메일</label>
+
       <input
         id="email"
         type="email"
@@ -359,6 +399,7 @@ td button{
 
     <div class="field">
       <label for="password">비밀번호</label>
+
       <input
         id="password"
         type="password"
@@ -388,9 +429,9 @@ td button{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      메인 앱
-========================= -->
+===================================================== -->
 
 <main id="app">
 
@@ -402,14 +443,19 @@ td button{
   >
 
     <div>
-      <h1>대기번호표 이미지 생성기</h1>
+
+      <h1>
+        대기번호표 이미지 생성기
+      </h1>
 
       <div class="sub">
         직원들이 같은 대기 명단을 함께 관리합니다.
       </div>
+
     </div>
 
     <div>
+
       <span id="conn" class="status offline">
         연결 준비중
       </span>
@@ -420,6 +466,7 @@ td button{
       >
         로그아웃
       </button>
+
     </div>
 
   </div>
@@ -429,14 +476,16 @@ td button{
 
 <div class="grid">
 
-<!-- =========================
-     입력 영역
-========================= -->
+<!-- =====================================================
+     입력
+===================================================== -->
 
 <section class="panel">
 
   <div class="field">
-    <label for="number">대기번호</label>
+    <label for="number">
+      대기번호
+    </label>
 
     <input
       id="number"
@@ -447,27 +496,57 @@ td button{
 
 
   <div class="field">
-    <label for="name">학생 이름</label>
+    <label for="name">
+      학생 이름
+    </label>
 
     <input
       id="name"
-      placeholder="예: 홍길동"
+      placeholder="예: 홍지안"
     >
   </div>
 
 
   <div class="field">
-    <label for="className">등록 희망 반</label>
+    <label for="className">
+      등록 희망 반
+    </label>
 
     <input
       id="className"
-      placeholder="예: Prestella A"
+      placeholder="예: PreA5B"
     >
   </div>
 
 
   <div class="field">
-    <label for="date">대기 시작일</label>
+    <label for="days">
+      요일
+    </label>
+
+    <input
+      id="days"
+      placeholder="예: 월수금"
+    >
+  </div>
+
+
+  <div class="field">
+    <label for="time">
+      시간
+    </label>
+
+    <input
+      id="time"
+      placeholder="예: 2:30-4:45/3:20-5:30[선택]"
+    >
+  </div>
+
+
+  <div class="field">
+    <label for="date">
+      대기 시작일
+    </label>
 
     <input
       id="date"
@@ -495,15 +574,15 @@ td button{
     style="width:100%;margin-top:8px"
     onclick="nextNumber()"
   >
-    ↻ 이 번의 다음 대기번호 자동 입력
+    ↻ 다음 대기번호 자동 입력
   </button>
 
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      미리보기
-========================= -->
+===================================================== -->
 
 <section>
 
@@ -513,17 +592,24 @@ td button{
 
 <div class="ticket-inner">
 
-  <div class="logo">
-    🔴 파머스 국제어학원
+  <!-- 실제 파머스 공식 로고 -->
+  <div class="logo-box">
+    <img
+      src="파머스로고.png"
+      alt="파머스 국제어학원"
+    >
   </div>
+
 
   <div class="tiny">
     죽전본원
   </div>
 
+
   <div class="waiting">
     수강 대기번호표
   </div>
+
 
   <div
     class="tiny"
@@ -532,35 +618,47 @@ td button{
     WAITING NUMBER
   </div>
 
-  <div class="goldline"></div>
-
-  <div
-    class="num"
-    id="previewNum"
-  >
-    1
-  </div>
-
-  <div class="unit">
-    번
-  </div>
 
   <div class="goldline"></div>
+
+
+  <!-- 숫자 + 번 같은 줄 -->
+  <div class="number-line">
+
+    <div
+      class="num"
+      id="previewNum"
+    >
+      1
+    </div>
+
+    <div class="unit">
+      번
+    </div>
+
+  </div>
+
+
+  <div class="goldline"></div>
+
 
   <div class="row">
     <span>이름</span>
     <span id="previewName">-</span>
   </div>
 
+
   <div class="row">
     <span>등록 희망 반</span>
     <span id="previewClass">-</span>
   </div>
 
+
   <div class="row">
     <span>대기 시작일</span>
     <span id="previewDate">-</span>
   </div>
+
 
   <p
     style="
@@ -572,6 +670,7 @@ td button{
     자리가 나는 대로 순서에 따라 순차 안내드리며,<br>
     순번이 되면 바로 연락드리겠습니다.
   </p>
+
 
   <div
     style="
@@ -589,20 +688,22 @@ td button{
 </div>
 
 
-<!-- =========================
-     문자 멘트
-========================= -->
+<!-- =====================================================
+     문자
+===================================================== -->
 
 <div class="panel message">
 
   <div class="listhead">
 
     <strong>
+
       📩 문자 발송 멘트
 
       <span class="badge">
         자동 생성
       </span>
+
     </strong>
 
     <button
@@ -645,9 +746,9 @@ td button{
 </div>
 
 
-<!-- =========================
+<!-- =====================================================
      대기자 명단
-========================= -->
+===================================================== -->
 
 <section class="listpanel">
 
@@ -713,12 +814,14 @@ td button{
       <tbody id="tbody">
 
         <tr>
+
           <td
             colspan="6"
             style="text-align:center"
           >
             로그인 후 불러옵니다.
           </td>
+
         </tr>
 
       </tbody>
@@ -740,7 +843,7 @@ td button{
 <script>
 
 /* =====================================================
-   Supabase 설정
+   Supabase
 ===================================================== */
 
 const SUPABASE_URL =
@@ -748,7 +851,6 @@ const SUPABASE_URL =
 
 const SUPABASE_ANON_KEY =
   "sb_publishable_gepnuWchSkC8Dv4l2IyMOw_iUSVZODk";
-
 
 let sb = null;
 let rows = [];
@@ -786,6 +888,12 @@ const nameInputEl =
 const classInput =
   document.getElementById("className");
 
+const daysInput =
+  document.getElementById("days");
+
+const timeInput =
+  document.getElementById("time");
+
 const dateInput =
   document.getElementById("date");
 
@@ -818,7 +926,7 @@ const previewDate =
 
 
 /* =====================================================
-   초기화
+   기본
 ===================================================== */
 
 function configured(){
@@ -857,6 +965,21 @@ function setDate(){
 
 
 /* =====================================================
+   날짜
+===================================================== */
+
+function formatDate(value){
+
+  if(!value){
+    return "-";
+  }
+
+  return value.replaceAll("-",".");
+
+}
+
+
+/* =====================================================
    미리보기
 ===================================================== */
 
@@ -875,14 +998,18 @@ function updatePreview(){
     dateInput.value || "-";
 
 
-  previewNum.textContent = n;
+  previewNum.textContent =
+    n;
 
-  previewName.textContent = name;
+  previewName.textContent =
+    name;
 
-  previewClass.textContent = className;
+  previewClass.textContent =
+    className;
 
   previewDate.textContent =
-    date.replaceAll("-",".");
+    formatDate(date);
+
 
   makeMessage();
 
@@ -893,6 +1020,8 @@ function updatePreview(){
   numberInput,
   nameInputEl,
   classInput,
+  daysInput,
+  timeInput,
   dateInput
 ].forEach(el => {
 
@@ -905,7 +1034,7 @@ function updatePreview(){
 
 
 /* =====================================================
-   문자 생성
+   문자 자동 생성
 ===================================================== */
 
 function makeMessage(){
@@ -920,18 +1049,34 @@ function makeMessage(){
     dateInput.value || "";
 
   const className =
-    classInput.value.trim() || "";
+    classInput.value.trim();
+
+  const days =
+    daysInput.value.trim();
+
+  const time =
+    timeInput.value.trim();
+
+
+  const formattedDate =
+    date.replaceAll("-",".");
 
 
   messageInput.value =
 `안녕하세요, 파머스 국제어학원 죽전본원입니다.
-학생 ${name} 학부모님 - 수강 대기 신청이 정상 접수되었습니다.
+${name} 학생 학부모님, ${className} 수강 대기 신청이 정상 접수되었습니다.
 
-▪ 대기번호 : ${n}번
-▪ 대기 시작일 : ${date}
-▪ 등록 희망 반 : ${className}
+*대기번호 : ${n}번
+*대기 시작일 : ${formattedDate}
 
-자리가 나는 대로 순서에 따라 순차 안내드리며, 순번이 되면 바로 연락드리겠습니다.`;
+*반명 ${className}
+*요일 ${days}
+*시간 ${time}
+
+자리가 나는 대로 순서에 따라 순차 안내드리며, 순번이 되면 바로 연락드리겠습니다.
+
+문의 : 031-261-1755`;
+
 
   byteCount.textContent =
     new TextEncoder()
@@ -977,12 +1122,14 @@ function nextNumber(){
 
 async function login(){
 
-  loginMsg.className = "hint";
+  loginMsg.className =
+    "hint";
 
   loginMsg.textContent =
     "로그인 중...";
 
-  loginButton.disabled = true;
+  loginButton.disabled =
+    true;
 
 
   try{
@@ -1035,9 +1182,8 @@ async function login(){
     const result =
       await sb.auth.signInWithPassword({
 
-        email: email,
-
-        password: password
+        email:email,
+        password:password
 
       });
 
@@ -1065,8 +1211,6 @@ async function login(){
       "로그인 성공!";
 
 
-    /* 핵심:
-       로그인 성공 즉시 메인 화면으로 이동 */
     await showApp();
 
 
@@ -1097,7 +1241,7 @@ async function login(){
 
 
 /* =====================================================
-   Enter 키로 로그인
+   Enter 로그인
 ===================================================== */
 
 emailInput.addEventListener(
@@ -1167,7 +1311,7 @@ function showLogin(){
 
 
 /* =====================================================
-   메인 화면
+   앱 화면
 ===================================================== */
 
 async function showApp(){
@@ -1187,7 +1331,7 @@ async function showApp(){
 
 
 /* =====================================================
-   대기자 목록 불러오기
+   목록 불러오기
 ===================================================== */
 
 async function loadRows(){
@@ -1371,6 +1515,17 @@ async function registerWaiting(){
   }
 
 
+  if(!className){
+
+    alert(
+      "등록 희망 반을 입력해주세요."
+    );
+
+    return;
+
+  }
+
+
   if(!date){
 
     alert(
@@ -1382,17 +1537,19 @@ async function registerWaiting(){
   }
 
 
+  /* 
+     DB에는 기존 구조 그대로 저장.
+     요일/시간은 문자 생성용으로만 사용.
+  */
+
   const result =
     await sb
       .from("waiting_list")
       .insert({
 
         number:n,
-
         name:name,
-
         class_name:className,
-
         start_date:date
 
       });
@@ -1416,16 +1573,21 @@ async function registerWaiting(){
   }
 
 
+  /*
+     중요:
+     먼저 현재 번호로 이미지를 저장한 뒤
+     목록을 새로 불러오고 다음 번호로 이동.
+  */
+
+  await saveTicketImage();
+
+
   alert(
     `${n}번 대기자가 등록되었습니다.`
   );
 
 
   await loadRows();
-
-  saveTicketImage();
-
-  nextNumber();
 
 }
 
@@ -1572,7 +1734,9 @@ function render(){
 
             <td>
               ${esc(
-                r.start_date || ""
+                formatDate(
+                  r.start_date || ""
+                )
               )}
             </td>
 
@@ -1629,10 +1793,123 @@ function esc(value){
 
 
 /* =====================================================
+   공식 로고 이미지 로드
+===================================================== */
+
+function loadLogo(){
+
+  return new Promise(
+    (resolve,reject) => {
+
+      const logo =
+        new Image();
+
+      logo.onload =
+        () => resolve(logo);
+
+      logo.onerror =
+        () => reject(
+          new Error(
+            "파머스로고.png 파일을 불러오지 못했습니다."
+          )
+        );
+
+      /*
+         index.html과 같은 GitHub 폴더에 있는
+         실제 공식 로고 파일
+      */
+
+      logo.src =
+        "파머스로고.png";
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   둥근 사각형
+===================================================== */
+
+function roundRect(
+  ctx,
+  x,
+  y,
+  width,
+  height,
+  radius
+){
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    x + radius,
+    y
+  );
+
+  ctx.lineTo(
+    x + width - radius,
+    y
+  );
+
+  ctx.quadraticCurveTo(
+    x + width,
+    y,
+    x + width,
+    y + radius
+  );
+
+  ctx.lineTo(
+    x + width,
+    y + height - radius
+  );
+
+  ctx.quadraticCurveTo(
+    x + width,
+    y + height,
+    x + width - radius,
+    y + height
+  );
+
+  ctx.lineTo(
+    x + radius,
+    y + height
+  );
+
+  ctx.quadraticCurveTo(
+    x,
+    y + height,
+    x,
+    y + height - radius
+  );
+
+  ctx.lineTo(
+    x,
+    y + radius
+  );
+
+  ctx.quadraticCurveTo(
+    x,
+    y,
+    x + radius,
+    y
+  );
+
+  ctx.closePath();
+
+}
+
+
+/* =====================================================
    이미지 저장
 ===================================================== */
 
-function saveTicketImage(){
+async function saveTicketImage(){
+
+  const logo =
+    await loadLogo();
+
 
   const canvas =
     document.createElement(
@@ -1641,12 +1918,10 @@ function saveTicketImage(){
 
 
   const w = 750;
-
   const h = 980;
 
 
   canvas.width = w;
-
   canvas.height = h;
 
 
@@ -1654,7 +1929,9 @@ function saveTicketImage(){
     canvas.getContext("2d");
 
 
-  /* 배경 */
+  /* =========================
+     배경
+  ========================= */
 
   ctx.fillStyle =
     "#203b6d";
@@ -1667,7 +1944,9 @@ function saveTicketImage(){
   );
 
 
-  /* 테두리 */
+  /* =========================
+     테두리
+  ========================= */
 
   ctx.strokeStyle =
     "#b8a878";
@@ -1682,46 +1961,93 @@ function saveTicketImage(){
   );
 
 
-  /* 기본 설정 */
+  /* =========================
+     공식 파머스 로고
+  ========================= */
+
+  const logoBoxW = 430;
+  const logoBoxH = 105;
+  const logoBoxX =
+    (w - logoBoxW) / 2;
+  const logoBoxY = 55;
+
+
+  ctx.fillStyle =
+    "#ffffff";
+
+  roundRect(
+    ctx,
+    logoBoxX,
+    logoBoxY,
+    logoBoxW,
+    logoBoxH,
+    12
+  );
+
+  ctx.fill();
+
+
+  const maxLogoW = 360;
+  const maxLogoH = 70;
+
+
+  const scale =
+    Math.min(
+      maxLogoW / logo.naturalWidth,
+      maxLogoH / logo.naturalHeight
+    );
+
+
+  const logoW =
+    logo.naturalWidth * scale;
+
+  const logoH =
+    logo.naturalHeight * scale;
+
+
+  ctx.drawImage(
+    logo,
+    w / 2 - logoW / 2,
+    logoBoxY + logoBoxH / 2 - logoH / 2,
+    logoW,
+    logoH
+  );
+
+
+  /* =========================
+     죽전본원
+  ========================= */
 
   ctx.textAlign =
     "center";
 
   ctx.fillStyle =
-    "#ffffff";
-
-
-  /* 학원 */
+    "#e2c56d";
 
   ctx.font =
-    "bold 42px Arial";
+    "bold 22px Arial";
 
   ctx.fillText(
-    "파머스 국제어학원",
-    w/2,
-    100
+    "죽전본원",
+    w / 2,
+    190
   );
 
+
+  /* =========================
+     제목
+  ========================= */
+
+  ctx.fillStyle =
+    "#ffffff";
 
   ctx.font =
     "bold 30px Arial";
 
   ctx.fillText(
     "수강 대기번호표",
-    w/2,
-    210
-  );
-
-
-  /* 번호 */
-
-  ctx.font =
-    "900 170px Arial";
-
-  ctx.fillText(
-    numberInput.value,
-    w/2,
-    500
+    w / 2,
+    245
   );
 
 
@@ -1729,19 +2055,120 @@ function saveTicketImage(){
     "#e2c56d";
 
   ctx.font =
-    "bold 34px Arial";
+    "bold 18px Arial";
 
   ctx.fillText(
-    "번",
-    w/2 + 140,
-    500
+    "WAITING NUMBER",
+    w / 2,
+    278
   );
 
 
-  /* 정보 */
+  /* =========================
+     금색 라인
+  ========================= */
+
+  ctx.fillStyle =
+    "#c4aa54";
+
+  ctx.fillRect(
+    w / 2 - 35,
+    305,
+    70,
+    2
+  );
+
+
+  /* =========================
+     번호 + 번
+     같은 줄
+  ========================= */
+
+  const number =
+    String(
+      numberInput.value || 1
+    );
+
+
+  ctx.font =
+    "900 170px Arial";
+
+  const numberWidth =
+    ctx.measureText(
+      number
+    ).width;
+
+
+  ctx.font =
+    "bold 42px Arial";
+
+  const unitWidth =
+    ctx.measureText(
+      "번"
+    ).width;
+
+
+  const gap = 18;
+
+  const totalWidth =
+    numberWidth +
+    gap +
+    unitWidth;
+
+
+  const startX =
+    (w - totalWidth) / 2;
+
+
+  ctx.textAlign =
+    "left";
 
   ctx.fillStyle =
     "#ffffff";
+
+  ctx.font =
+    "900 170px Arial";
+
+  ctx.fillText(
+    number,
+    startX,
+    485
+  );
+
+
+  ctx.fillStyle =
+    "#e2c56d";
+
+  ctx.font =
+    "bold 42px Arial";
+
+  ctx.fillText(
+    "번",
+    startX +
+      numberWidth +
+      gap,
+    485
+  );
+
+
+  /* =========================
+     금색 라인
+  ========================= */
+
+  ctx.fillStyle =
+    "#c4aa54";
+
+  ctx.fillRect(
+    w / 2 - 35,
+    525,
+    70,
+    2
+  );
+
+
+  /* =========================
+     정보
+  ========================= */
 
   ctx.textAlign =
     "left";
@@ -1749,62 +2176,118 @@ function saveTicketImage(){
   ctx.font =
     "bold 25px Arial";
 
+  const labelX = 80;
+  const valueX = 260;
+
+
+  ctx.fillStyle =
+    "#d8b84f";
 
   ctx.fillText(
     "이름",
-    80,
+    labelX,
     610
   );
+
+
+  ctx.fillStyle =
+    "#ffffff";
 
   ctx.fillText(
     nameInputEl.value || "-",
-    260,
+    valueX,
     610
   );
 
 
+  ctx.fillStyle =
+    "#d8b84f";
+
   ctx.fillText(
     "등록 희망 반",
-    80,
+    labelX,
     680
   );
+
+
+  ctx.fillStyle =
+    "#ffffff";
 
   ctx.fillText(
     classInput.value || "-",
-    260,
+    valueX,
     680
   );
 
 
+  ctx.fillStyle =
+    "#d8b84f";
+
   ctx.fillText(
     "대기 시작일",
-    80,
+    labelX,
     750
   );
+
+
+  ctx.fillStyle =
+    "#ffffff";
 
   ctx.fillText(
-    dateInput.value || "-",
-    260,
+    formatDate(
+      dateInput.value || "-"
+    ),
+    valueX,
     750
   );
 
 
-  /* 전화번호 */
+  /* =========================
+     안내 문구
+  ========================= */
 
   ctx.textAlign =
     "center";
+
+  ctx.fillStyle =
+    "#aeb9ce";
+
+  ctx.font =
+    "18px Arial";
+
+  ctx.fillText(
+    "자리가 나는 대로 순서에 따라 순차 안내드리며,",
+    w / 2,
+    810
+  );
+
+  ctx.fillText(
+    "순번이 되면 바로 연락드리겠습니다.",
+    w / 2,
+    840
+  );
+
+
+  /* =========================
+     전화번호
+  ========================= */
+
+  ctx.fillStyle =
+    "#ffffff";
 
   ctx.font =
     "bold 26px Arial";
 
   ctx.fillText(
-    "031-261-1755",
-    w/2,
-    900
+    "문의 : 031-261-1755",
+    w / 2,
+    910
   );
 
 
-  /* 다운로드 */
+  /* =========================
+     다운로드
+  ========================= */
 
   const a =
     document.createElement(
@@ -1813,7 +2296,7 @@ function saveTicketImage(){
 
 
   a.download =
-    `대기번호_${numberInput.value}번.png`;
+    `대기번호_${number}번.png`;
 
 
   a.href =
@@ -1844,6 +2327,7 @@ async function copyMessage(){
       "문구를 복사했습니다."
     );
 
+
   }catch(error){
 
     messageInput.select();
@@ -1851,6 +2335,7 @@ async function copyMessage(){
     document.execCommand(
       "copy"
     );
+
 
     alert(
       "문구를 복사했습니다."
@@ -1913,7 +2398,6 @@ function exportCSV(){
 
   const csv =
     "\uFEFF" +
-
     lines
       .map(row =>
         row
@@ -2002,7 +2486,7 @@ async function boot(){
   }
 
 
-  /* 로그인 상태 변경 감시 */
+  /* 로그인 상태 변경 */
 
   sb.auth.onAuthStateChange(
     async (event, session) => {
